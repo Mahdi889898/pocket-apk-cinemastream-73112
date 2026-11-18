@@ -1,0 +1,6 @@
+{
+  "name": "سینما استریم",
+  "description": "پخش و جستجوی خودکار فیلم‌ها از سراسر اینترنت، کانال‌های زنده و وب‌سایت‌های ویدیویی بدون نیاز به ورود",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

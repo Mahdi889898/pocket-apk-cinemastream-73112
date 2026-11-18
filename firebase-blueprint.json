@@ -1,0 +1,121 @@
+{
+  "entities": {
+    "MediaSource": {
+      "title": "MediaSource",
+      "description": "A user-saved channel, M3U playlist, website, or direct movie stream source.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Firebase Auth UID of the owning user."
+        },
+        "title": {
+          "type": "string",
+          "description": "Display name of the channel, website, or playlist."
+        },
+        "url": {
+          "type": "string",
+          "description": "Stream URL, M3U playlist URL, or website URL."
+        },
+        "sourceType": {
+          "type": "string",
+          "enum": ["CHANNEL", "PLAYLIST_M3U", "WEBSITE", "DIRECT_MOVIE"],
+          "description": "Type of media source."
+        },
+        "category": {
+          "type": "string",
+          "description": "Category label such as Movies, Live TV, Animation, or Web."
+        },
+        "logoUrl": {
+          "type": "string",
+          "description": "Optional poster or channel logo URL."
+        },
+        "channelCount": {
+          "type": "integer",
+          "description": "Number of channels discovered in an M3U playlist (0 for single sources)."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when created (FieldValue.serverTimestamp())."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when updated (FieldValue.serverTimestamp())."
+        }
+      },
+      "required": ["userId", "title", "url", "sourceType", "category", "channelCount", "createdAt", "updatedAt"]
+    },
+    "LibraryItem": {
+      "title": "LibraryItem",
+      "description": "A user's favorited movie/channel or watch history entry with resume position.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Firebase Auth UID of the owning user."
+        },
+        "title": {
+          "type": "string",
+          "description": "Movie or channel title."
+        },
+        "streamUrl": {
+          "type": "string",
+          "description": "Playable video or HLS stream URL."
+        },
+        "posterUrl": {
+          "type": "string",
+          "description": "Optional poster or thumbnail URL."
+        },
+        "sourceName": {
+          "type": "string",
+          "description": "Origin channel or website name."
+        },
+        "mediaType": {
+          "type": "string",
+          "enum": ["MOVIE", "LIVE_CHANNEL", "WEB_VIDEO"],
+          "description": "Classification of the media item."
+        },
+        "favorite": {
+          "type": "boolean",
+          "description": "Whether the user bookmarked this item in their watchlist."
+        },
+        "lastPositionMs": {
+          "type": "integer",
+          "description": "Last playback position in milliseconds."
+        },
+        "durationMs": {
+          "type": "integer",
+          "description": "Total duration in milliseconds (0 for live streams)."
+        },
+        "lastWatchedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Optional server timestamp of last playback (FieldValue.serverTimestamp())."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when created (FieldValue.serverTimestamp())."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Server timestamp when updated (FieldValue.serverTimestamp())."
+        }
+      },
+      "required": ["userId", "title", "streamUrl", "sourceName", "mediaType", "favorite", "lastPositionMs", "durationMs", "createdAt", "updatedAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}/sources/{sourceId}": {
+      "schema": { "$ref": "#/entities/MediaSource" },
+      "description": "User-saved channels, M3U playlists, and movie websites."
+    },
+    "/users/{userId}/library/{itemId}": {
+      "schema": { "$ref": "#/entities/LibraryItem" },
+      "description": "User's favorite movies, bookmarks, and playback resume history."
+    }
+  }
+}
